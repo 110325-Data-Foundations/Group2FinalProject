@@ -1,2 +1,2 @@
--- CREATE DATABASE stormdb;
+ CREATE DATABASE stormdb;
 
