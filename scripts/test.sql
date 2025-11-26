@@ -1,4 +1,4 @@
--- CREATE DATABASE stormdb;
+ CREATE DATABASE stormdb;
 
 -- SELECT *
 -- FROM storm_events_details_invalid
