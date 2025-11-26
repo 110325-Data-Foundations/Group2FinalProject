@@ -1,0 +1,16 @@
+1) git pull from main
+2) Open Docker and start it
+3) add .env file and DATABASE_URL = postgresql://postgres: {add your password} @localhost:5432/ {stormdb}
+4) Go to elephant extention and open that so that its green
+5) open python interpreter
+6) pip install pandas sqlalchemy psycopg2 dotenv
+7) run test.sql (CREATE DATABASE stormdb;)
+8) run load_first.py
+9) run test.py
+10) run test.sql (
+    SELECT *
+    FROM storm_events_details_invalid
+    LIMIT 20;
+    )
+11) Double check that in Elephant extention, in the stormdb database, in Schemas, in public, 
+        that there are 3 tables (storm events details, storm events details cleaned, storm events details invalid)
