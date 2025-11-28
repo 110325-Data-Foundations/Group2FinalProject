@@ -1,5 +1,4 @@
- CREATE DATABASE stormdb;
 
--- SELECT *
--- FROM storm_events_details_invalid
--- LIMIT 20;
+SELECT *
+FROM storm_events_details_invalid
+LIMIT 20;
