@@ -36,7 +36,9 @@ cols_to_drop = [
     "TOR_LENGTH",
     "TOR_F_SCALE",
     "EVENT_NARRATIVE",
+    "EPISODE_NARRATIVE",
     "CATEGORY",
+    "DATA_SOURCE",
 ]
 
 coord_cols_missing_overlap = [
