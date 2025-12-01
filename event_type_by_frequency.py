@@ -16,7 +16,7 @@ database_url = os.getenv("DATABASE_URL")
 engine = create_engine(database_url)
 
 # load cleaned data(?)
-df = pd.read_sql('SELECT "EVENT_TYPE" FROM storm_events_details_cleaned', engine)
+df = pd.read_sql('SELECT "EVENT_TYPE" FROM storm_events_details', engine)
 
 # group by event type and count occurrences
 event_counts = df['EVENT_TYPE'].value_counts().sort_values(ascending=False)
@@ -33,7 +33,7 @@ plt.figure(figsize=(12, 8))
 event_counts.plot(kind='bar', color='skyblue')
 
 # title and labels
-plt.title('Frequency of Storm Event by Type')
+plt.title('Frequency of Storm Event by Type (2025)')
 plt.xlabel('Event Type')
 plt.ylabel('Number of Occurrences')
 plt.xticks(rotation=45, ha='right')
