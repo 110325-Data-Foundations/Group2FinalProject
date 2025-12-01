@@ -14,8 +14,36 @@ if not database_url:
 engine = create_engine(database_url)
 
 # --- Step 3: Read CSV file ---
-csv_path = "data/StormEvents_details.csv"
-df = pd.read_csv(csv_path)
+DATA_DIR = "data"
+
+# a. List all CSV and JSON files
+files = [f for f in os.listdir(DATA_DIR) if f.lower().endswith((".csv", ".json"))]
+
+if not files:
+    raise FileNotFoundError("No CSV or JSON files found in data folder.")
+
+# b. Show options
+print("\nAvailable Data Files:\n")
+for i, file in enumerate(files, start=1):
+    print(f"{i}. {file}")
+
+# c. User selects file
+choice = int(input("\nEnter 1 or 2 to load a file: ")) - 1
+selected_file = files[choice]
+
+file_path = os.path.join(DATA_DIR, selected_file)
+
+# d. Load based on extension
+if selected_file.lower().endswith(".csv"):
+    df = pd.read_csv(file_path)
+elif selected_file.lower().endswith(".json"):
+    df = pd.read_json(file_path)
+else:
+    raise ValueError("Unsupported file format.")
+
+# e. Confirm load
+print(f"\nLoaded file: {selected_file}")
+print(df.head())
 
 # --- (Optional) Save raw table to PostgreSQL ---
 df.to_sql(
