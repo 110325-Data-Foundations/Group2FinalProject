@@ -227,10 +227,10 @@ fig = go.Figure(data = data)
 fig.update_layout(
     barmode = "stack",
     title = {
-        "text": "US Disaster Deaths per State",
+        "text": "Deaths from each Disaster in the US",
         "x": 0.5  # <-- centers the title
     },
-    xaxis_title = "Disaster Type",
+    xaxis_title = "Type of Disaster",
     yaxis_title = "Number of Deaths",
     legend_traceorder = "normal",
     xaxis = dict(categoryorder = "array",        
