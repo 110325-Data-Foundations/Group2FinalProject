@@ -111,8 +111,12 @@ CREATE TABLE storm_events_details_cleaned (
     "BEGIN_LAT"           double precision NOT NULL,
     "BEGIN_LON"           double precision NOT NULL,
     "END_LAT"             double precision NOT NULL,
-    "END_LON"             double precision NOT NULL
+    "END_LON"             double precision NOT NULL,
+
+    PRIMARY KEY ("EVENT_ID")
+
 );
+
 
 -- Invalid rows table (rows where all coord columns are NULL)
 -- Keep full schema like staging table
