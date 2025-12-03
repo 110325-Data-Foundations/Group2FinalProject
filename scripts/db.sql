@@ -113,7 +113,7 @@ CREATE TABLE storm_events_details_cleaned (
     "END_LAT"             double precision NOT NULL,
     "END_LON"             double precision NOT NULL,
 
-    PRIMARY KEY ("EVENT_ID")
+    PRIMARY KEY ("EVENT_ID") --Optional as dupes prevented in prevent_duplicate_event_id()
 
 );
 
