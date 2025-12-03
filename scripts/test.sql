@@ -5,4 +5,6 @@
  --ELECT COUNT(*) FROM storm_events_details;
 -- SELECT COUNT(*) FROM storm_events_details_cleaned;
 -- SELECT COUNT(*) FROM storm_events_details_invalid;
-SELECT * FROM storm_events_audit LIMIT 10;
+SELECT * FROM storm_events_details 
+ORDER BY DAMAGE_PROPERTY DESC
+LIMIT 1;
