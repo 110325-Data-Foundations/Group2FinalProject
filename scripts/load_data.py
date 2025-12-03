@@ -71,14 +71,14 @@ def normalize_damage_cols(df: pd.DataFrame) -> pd.DataFrame:
             )
 
             # Separate numeric part and suffix (K/M)
-            factor = s.str.extract(r'([KkMm])$', expand=False)
-            base = s.str.replace(r'[KkMm]', '', regex=True)
+            factor = s.str.extract(r'([KkMmBb])$', expand=False)
+            base = s.str.replace(r'[KkMmBb]', '', regex=True)
 
             num = pd.to_numeric(base, errors="coerce")
 
             # Apply multiplier: K -> 1_000, M -> 1_000_000, default -> 1
             multiplier = factor.map(
-                {"K": 1_000, "k": 1_000, "M": 1_000_000, "m": 1_000_000}
+                {"K": 1_000, "k": 1_000, "M": 1_000_000, "m": 1_000_000, "b" : 1_000_000_000, "B" : 1_000_000_000}
             ).fillna(1)
 
             num = num * multiplier

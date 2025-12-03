@@ -117,7 +117,6 @@ CREATE TABLE storm_events_details_cleaned (
 
 );
 
-
 -- Invalid rows table (rows where all coord columns are NULL)
 -- Keep full schema like staging table
 CREATE TABLE storm_events_details_invalid (
