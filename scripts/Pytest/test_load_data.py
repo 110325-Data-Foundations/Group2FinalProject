@@ -125,7 +125,76 @@ def test_missing_values_returned_filled():
     # Assert that the NA columns were dealt with
     assert assert_frame_equal(expected,returned,check_dtype=False) == None
 
+# Checking if build_clean_df actually drops the right columns
+def test_build_clean_df_drops_unwanted_columns():
+    import pandas as pd
+    from load_data import build_clean_df, COLS_TO_DROP
 
-    
-    
+    # Arrange: df with a mix of droppable + keepable columns
+    df = pd.DataFrame({
+        "EVENT_ID": [1, 2],
+        "STATE": ["TX", "OK"],
+        "TOR_OTHER_WFO": ["X", "Y"],       # should be dropped
+        "EPISODE_NARRATIVE": ["a", "b"],   # should be dropped
+    })
 
+    # Act
+    df_clean = build_clean_df(df)
+
+    # Assert: all COLS_TO_DROP that were present must be gone
+    for col in COLS_TO_DROP:
+        assert col not in df_clean.columns
+
+    # And original "good" columns must remain
+    assert "EVENT_ID" in df_clean.columns
+    assert "STATE" in df_clean.columns
+
+# Test analyze_nulls returns correct counts
+def test_analyze_nulls_basic():
+    import pandas as pd
+    import numpy as np
+    from load_data import analyze_nulls
+
+    # Arrange
+    df = pd.DataFrame({
+        "A": [1, np.nan, 3],
+        "B": [np.nan, np.nan, 5],
+        "C": [7, 8, 9],  # no nulls
+    })
+
+    # Act
+    remaining_nonzero, total_nulls, rows_with_null = analyze_nulls(df)
+
+    # Assert per-column nulls (only nonzero are returned)
+    assert remaining_nonzero["A"] == 1   # one NaN in A
+    assert remaining_nonzero["B"] == 2   # two NaNs in B
+    assert "C" not in remaining_nonzero  # 0 nulls => excluded
+
+    # Assert totals
+    assert total_nulls == 3              # 1 + 2
+    assert rows_with_null == 2           # first two rows have NaNs
+
+# Extra edge-case test for normalize_damage_cols
+def test_analyze_nulls_basic():
+    import pandas as pd
+    import numpy as np
+    from load_data import analyze_nulls
+
+    # Arrange
+    df = pd.DataFrame({
+        "A": [1, np.nan, 3],
+        "B": [np.nan, np.nan, 5],
+        "C": [7, 8, 9],  # no nulls
+    })
+
+    # Act
+    remaining_nonzero, total_nulls, rows_with_null = analyze_nulls(df)
+
+    # Assert per-column nulls (only nonzero are returned)
+    assert remaining_nonzero["A"] == 1   # one NaN in A
+    assert remaining_nonzero["B"] == 2   # two NaNs in B
+    assert "C" not in remaining_nonzero  # 0 nulls => excluded
+
+    # Assert totals
+    assert total_nulls == 3              # 1 + 2
+    assert rows_with_null == 2           # first two rows have NaNs
