@@ -70,6 +70,60 @@ def test_normalize_damage_cols_pass():
     assert assert_frame_equal(expected,returned,check_dtype=False) == None
 
 
+# Pass test case where it returns the rows where all coord columns are null
+def test_split_clean_invalid_pass():
+
+    # Arrange
+    
+    import pandas as pd
+    import numpy as np
+    test_case = pd.DataFrame({
+        "BEGIN_AZIMUTH" : [1,1,np.nan,3],
+        "BEGIN_LOCATION" : [2,2,np.nan,5],
+        "BEGIN_RANGE":[1,1,np.nan,3],
+        "END_RANGE":[1,1,np.nan,3],
+        "END_AZIMUTH":[1,1,np.nan,3],
+        "BEGIN_LON":[1,1,np.nan,3],
+        "BEGIN_LAT":[1,1,np.nan,3],
+        "END_LOCATION":[1,1,np.nan,3],
+        "END_LON":[1,1,np.nan,3],
+        "END_LAT":[1,1,np.nan,3],
+    })
+
+    # Act
+    _, _, count = load_data.split_clean_invalid(test_case)
+
+
+    # Assert
+    # Only one row was cleanned out
+    assert count == 1
+
+# Pass case for filling in the NAN values
+def test_missing_values_returned_filled():
+    import pandas as pd
+    import numpy as np
+    from pandas.testing import assert_frame_equal
+    # Arrange the dataframes of what we are testing,
+    # and what we expect to come back
+    test_case = pd.DataFrame({
+        "MAGNITUDE" : [np.nan,3],
+        "DAMAGE_CROPS": [400, np.nan],
+        "DAMAGE_PROPERTY" : [np.nan, 200],
+        "FLOOD_CAUSE" : ["Large Rain", np.nan],
+        "MAGNITUDE_TYPE" : [np.nan, "Very strong"],
+    })
+
+    expected = pd.DataFrame({
+        "MAGNITUDE" : [0,3],
+        "DAMAGE_CROPS": [400, 0],
+        "DAMAGE_PROPERTY" : [0, 200],
+        "FLOOD_CAUSE" : ["Large Rain", "N/A"],
+        "MAGNITUDE_TYPE" : ["N/A", "Very strong"],
+    })
+    # Act
+    returned = load_data.fill_missing_values(test_case)
+    # Assert that the NA columns were dealt with
+    assert assert_frame_equal(expected,returned,check_dtype=False) == None
 
 
     
