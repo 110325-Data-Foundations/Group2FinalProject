@@ -98,7 +98,7 @@ def test_split_clean_invalid_pass():
     # Only one row was cleanned out
     assert count == 1
 
-# Pass case for filling in the NAN values
+# Pass case for filling in the NAN values of certian columns
 def test_missing_values_returned_filled():
     import pandas as pd
     import numpy as np
